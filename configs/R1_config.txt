@@ -1,0 +1,46 @@
+!
+hostname R1
+!
+!
+interface Loopback1
+ ip address 1.1.1.1 255.255.255.255
+ ip ospf 1 area 100
+!
+interface Port-channel1
+ ip address 192.168.1.2 255.255.255.252
+ ip ospf network point-to-point
+!
+interface GigabitEthernet0/0
+ ip address 192.168.4.1 255.255.255.252
+ ip ospf network point-to-point
+!
+interface GigabitEthernet1/0
+ no ip address
+ channel-group 1
+!
+interface GigabitEthernet2/0
+ no ip address
+ channel-group 1
+!
+interface GigabitEthernet3/0
+ ip address 192.168.3.1 255.255.255.252
+ ip ospf network point-to-point
+!
+interface Serial4/0
+ ip address 195.0.1.2 255.255.255.252
+ encapsulation ppp
+ clock rate 64000
+!
+!
+router ospf 1
+ passive-interface Loopback1
+ network 192.168.1.0 0.0.0.3 area 100
+ network 192.168.3.0 0.0.0.3 area 100
+ network 192.168.4.0 0.0.0.3 area 100
+ default-information originate
+!
+!
+ip route 0.0.0.0 0.0.0.0 195.0.1.1
+!
+!
+end

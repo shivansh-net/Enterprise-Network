@@ -1,0 +1,17 @@
+!
+hostname ISP
+!
+!
+interface Loopback1
+ ip address 10.10.10.10 255.255.255.255
+!
+interface Serial4/0
+ ip address 195.0.1.1 255.255.255.252
+ encapsulation ppp
+ clock rate 64000
+!
+!
+ip route 0.0.0.0 0.0.0.0 195.0.1.2
+!
+!
+end
